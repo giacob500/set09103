@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, abort
+from flask import Flask, redirect, url_for, abort, request
 import random
 import string
 app = Flask(__name__)
@@ -35,6 +35,13 @@ def static_example_img():
     url = url_for('static', filename='vmask.jpg')
     end = '">'
     return start+url+end, 200
+
+@app.route('/account/', methods = ['GET', 'POST'])
+def account():
+    if request.method == 'POST':
+        return "POST'ed to /account root\n"
+    else:
+        return "GET /account root"
 
 
 if __name__ == "__main__":
