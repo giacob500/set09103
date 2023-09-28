@@ -8,10 +8,6 @@ def hello_world():
     result = "<h1>The following is a random character:</h1>" + ''.join(random.choices(string.ascii_letters))
     return result
 
-@app.route("/hello/")
-def hello():
-    return "Hello Napier!!! :D"
-
 @app.route("/private")
 def private():
     #Test for user logged in failed so redirect to login URL
@@ -52,6 +48,10 @@ def account():
         </form>
         </body><html>'''
         return page
+
+@app.route("/hello/<name>")
+def hello(name):
+    return "Hello %s" % name
 
 
 if __name__ == "__main__":
