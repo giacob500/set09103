@@ -1,6 +1,7 @@
-from flask import Flask, redirect, url_for, abort, request
+from flask import Flask, redirect, url_for, abort, request, render_template
 import random
 import string
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -52,9 +53,10 @@ def account():
         </body><html>'''
         return page, 200
 
-@app.route("/hello/<name>")
-def hello(name):
-    return "Hello %s" % name
+@app.route('/hello/')
+@app.route('/hello/<name>')
+def hello(name=None):
+    return render_template('conditional.html', name=name)
 
 
 if __name__ == "__main__":
