@@ -1,7 +1,7 @@
-from flask import Flask, session
+from flask import Flask, flash, redirect, request, url_for, render_template
 
 app = Flask(__name__)
-app.secret_key = 'A0Zr98j/3yXR~XHH!jmN]LWX/,?RT'
+app.secret_key = 'supersecret'
 # Key above is just and example, it can be genrated by doing the following:
 # >>> import os
 # >>> os.urandom(24)
@@ -9,26 +9,16 @@ app.secret_key = 'A0Zr98j/3yXR~XHH!jmN]LWX/,?RT'
 
 @app.route('/')
 def index():
-    return "Root route for the session example"
+    return render_template('index.html')
 
-@app.route('/session/write/<name>/')
-def write(name=None):
-    session['name'] = name
-    return "Wrote %s into 'name' key of session" % name
-
-@app.route('/session/read/')
-def read():
-    try:
-        if(session['name']):
-            return str(session['name'])
-    except KeyError:
-        pass
-    return "No session variable set for 'name' key" 
-
-@app.route('/session/remove/')
-def remove():
-    session.pop('name', None)
-    return "Removed key 'name' from session"
+@app.route('/login/')
+@app.route('/login/<message>')
+def login(message=None):
+    if (message != None):
+        flash(message)
+    else:
+        flash(u'A default message')
+    return redirect(url_for('index'))
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
