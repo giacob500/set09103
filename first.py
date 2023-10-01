@@ -1,39 +1,34 @@
-import configparser
-
-from flask import Flask
+from flask import Flask, session
 
 app = Flask(__name__)
-
-def init(app):
-    config = configparser.ConfigParser()
-    try:
-        print("INIT FUNCTION")
-        config_location = "etc/defaults.cfg"
-        config.read(config_location)
-
-        app.config['DEBUG'] = config.get("config", "debug")
-        app.config['ip_address'] = config.get("config", "ip_address")
-        app.config['port'] = config.get("config", "port")
-        app.config['url'] = config.get("config", "url")
-    except:
-        print ("Could not read configs from: ", config_location)
-
-init(app)
+app.secret_key = 'A0Zr98j/3yXR~XHH!jmN]LWX/,?RT'
+# Key above is just and example, it can be genrated by doing the following:
+# >>> import os
+# >>> os.urandom(24)
+# Then paste result in string above
 
 @app.route('/')
-def root():
-    return "Hello Napier from the configuration testing app"
+def index():
+    return "Root route for the session example"
 
-@app.route('/config/')
-def config():
-    s = []
-    s.append('debug:'+str(app.config['DEBUG']))
-    s.append('port:'+app.config['port'])
-    s.append('ip_address:'+app.config['ip_address'])
-    return ', '.join(s)
+@app.route('/session/write/<name>/')
+def write(name=None):
+    session['name'] = name
+    return "Wrote %s into 'name' key of session" % name
+
+@app.route('/session/read/')
+def read():
+    try:
+        if(session['name']):
+            return str(session['name'])
+    except KeyError:
+        pass
+    return "No session variable set for 'name' key" 
+
+@app.route('/session/remove/')
+def remove():
+    session.pop('name', None)
+    return "Removed key 'name' from session"
 
 if __name__ == "__main__":
-    init(app)
-    app.run(
-        host=app.config['ip_address'],
-        port=int(app.config['port']))
+    app.run(host='0.0.0.0', debug=True)
