@@ -9,5 +9,5 @@ class TestingTest(unittest.TestCase):
         assert 'charset=utf-8' in out.content_type
         assert 'text/html' in out.content_type
 
-if __name__ == "__name__":
+if __name__ == "__main__":
     unittest.main()
