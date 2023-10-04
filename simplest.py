@@ -2,22 +2,17 @@ import socket
 
 HOST, PORT = '', 8080
 
-http_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-http_server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-http_server.bind((HOST, PORT))
-http_server.listen(1)
-
+listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+listen_socket.bind((HOST, PORT))
+listen_socket.listen(1)
 print("Serving HTTP on port {PORT} ...".format(PORT=PORT))
-
 while True:
-    client_connection, client_address = http_server.accept()
-    request_data = client_connection.recv(1024)
-    print(request_data.decode("utf-8"))
+    client_connection, client_address = listen_socket.accept()
+    request_data = client_connection.recv(1024).decode("utf-8")
+    print(request_data)
 
-    http_response = b"""\
-HTTP/1.1 200 OK
-
-Hello Napier!
-"""
+    http_response = "HTTP/1.1 200 OK\n\nHello Napier!".encode()
     client_connection.sendall(http_response)
     client_connection.close
+listen_socket.close()
