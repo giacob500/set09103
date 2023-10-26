@@ -1,6 +1,11 @@
 from flask import Flask, redirect, url_for, render_template
 app = Flask(__name__)
 
+# Testing
+@app.route("/test")
+def test():
+    return render_template("test.html")
+
 #Pages in the website
 @app.route("/")
 def home():
