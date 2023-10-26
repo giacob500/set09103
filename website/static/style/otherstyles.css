@@ -1,0 +1,54 @@
+.table-with-bg {
+  background-image: url('../imgs/marble/cu237-marble-coaster-ancient-greek-women-gynoecium.jpg');
+  /* URL of the background image */
+  background-size: cover;
+  /* Fit the image within the table without distortion */
+  background-repeat: no-repeat;
+  /* Prevent image repetition */
+  width: 300px;
+  /* Set the table width to 300px */
+}
+
+
+table {
+  border-collapse: collapse;
+  border: 2px solid #000;
+  /* Add a border to the table */
+  table-layout: fixed;
+}
+
+table td {
+  width: 300px;
+  height: 300px;
+  border: 1px solid black;
+  text-align: center;
+  text-shadow: 0px 0px 10px white;
+}
+
+table td:hover {
+  background-color: lightblue;
+  opacity: 25%;
+}
+
+table td.selected {
+  background-color: #3b83ff;
+  opacity: 75%;
+  color: white;
+  text-shadow: 5px 5px 10px black;
+}
+
+.marble-button {
+  background-image: url('https://www.multipanel.co.uk/media/lmjav1lv/calacattamarble_product_swatch600x600.jpg?anchor=center&mode=crop&rnd=133304483561970000');
+  background-size: cover; /* Adjust as needed */
+  background-repeat: no-repeat;
+  color: black;
+  width: 150px; /* Adjust the width and height as needed */
+  height: 150px;
+  border: none; /* Remove button border */
+  cursor: pointer;
+}
+
+.marble-button:hover {
+  color: black;
+}
+
