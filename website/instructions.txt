@@ -1,0 +1,2 @@
+To activate virtualenv:
+env1\Scripts\activate
