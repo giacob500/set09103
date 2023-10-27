@@ -38,7 +38,7 @@ table td.selected {
 }
 
 .marble-button {
-  background-image: url('https://www.multipanel.co.uk/media/lmjav1lv/calacattamarble_product_swatch600x600.jpg?anchor=center&mode=crop&rnd=133304483561970000');
+  background-image: url('../imgs/textures/marble.jpg');
   background-size: cover; /* Adjust as needed */
   background-repeat: no-repeat;
   color: black;
@@ -48,7 +48,28 @@ table td.selected {
   cursor: pointer;
 }
 
+.terracotta-button {
+  background-image: url('../imgs/textures/terracotta.jpg');
+  background-size: cover; /* Adjust as needed */
+  background-repeat: no-repeat;
+  color: white;
+  width: 150px; /* Adjust the width and height as needed */
+  height: 150px;
+  border: none; /* Remove button border */
+  cursor: pointer;
+}
+
+.wood-button {
+  background-image: url('../imgs/textures/wood.jpg');
+  background-size: cover; /* Adjust as needed */
+  background-repeat: no-repeat;
+  color: white;
+  width: 150px; /* Adjust the width and height as needed */
+  height: 150px;
+  border: none; /* Remove button border */
+  cursor: pointer;
+}
+
 .marble-button:hover {
   color: black;
 }
-

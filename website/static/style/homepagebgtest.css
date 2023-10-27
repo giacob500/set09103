@@ -37,3 +37,16 @@
 .btn-primary {
     margin-top: 20px; /* Add space above the "Enter" button */
 }
+
+.error-paragraph-style {
+    text-align: left; /* Add space above the "Enter" button */
+}
+
+.background-crackedmarble {
+    margin: 0;
+    padding: 0;
+    background-image: linear-gradient(to bottom, white, rgba(0, 0, 0, 0)), url('../imgs/bg/cracked_marble_light.jpg');
+    background-size: contain;
+    background-position: center top;
+    background-repeat: no-repeat;
+}
