@@ -1,20 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    {% include "jinja/headers.html" %}
-    <link rel="stylesheet" type="text/css" href="../static/style/otherstyles.css"/>
-    <title>Categories - Studio Vertu Europe</title>
-</head>
-<body>
-    <div class="text-center">
-        <h1>Categories</h1>
-        <p>Choose a category from below:</p>
-        <button type="button" class="btn btn-secondary marble-button" onclick="document.location='collections.html'">Marble</button>
-        <button type="button" class="btn btn-secondary terracotta-button" onclick="document.location='collections.html'">Terracotta</button>
-        <button type="button" class="btn btn-secondary wood-button" onclick="document.location='collections.html'">Wood</button>
-    </div>
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        {% include "jinja/footer_content.html" %}
-    </footer>
-</body>
-</html>
+{% extends "jinja/bases/general_base.html" %}
+{% block otherstyles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}" />{% endblock %}
+{% block title %}Categories{% endblock %}
+{% block content%}
+<div class="text-center">
+    <h1>Categories</h1>
+    <p>Choose a category from below:</p>
+    <a href="/collections" class="btn btn-secondary marble-button">Marble</a>
+    <a href="/collections" class="btn btn-secondary terracotta-button">Terracotta</a>
+    <a href="/collections" class="btn btn-secondary wood-button">Wood</a>
+</div>
+{% endblock %}

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="/style/otherstyles.css"/>
-    <script src="/scripts/script.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}"/>
+    <script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
     <title>Table Example</title>
 </head>
 <body>
-    <button type="button" onclick="document.location='../product.html'">Back to main website</button>
+    <a href="/product">Back to main website</a>
     <h1>Set mattonelle 4x4</h1>
     <div>
         <label for="sizeSelect">Table Size:</label>

@@ -1,40 +1,34 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    {% include "jinja/headers.html" %}
-    <link rel="stylesheet" type="text/css" href="../style/otherstyles.css"/>
-    <title>Marble - Studio Vertu Europe</title>
-</head>
-
-<body>
-    <div class="container text-center">
-        <h1>Marble</h1>
-        <p>Choose a collection from below:</p>
-    </div>
-    <div class="container">
-        <div class="row d-grid gap-3">
-            <div class="col">
-            <a href="product.html">
-                <img src="../static/imgs/marble/cu237-marble-coaster-ancient-greek-women-gynoecium.jpg" class="img-fluid" alt="Set marmette 1">
+{% extends "jinja/bases/general_base.html" %}
+{% block otherstyles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}" />{% endblock %}
+{% block title %}Collections{% endblock %}
+{% block content%}
+<div class="text-center">
+    <h1>Marble</h1>
+    <p>Choose a collection from below:</p>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <a href="product">
+                <img src="../static/imgs/marble/cu237-marble-coaster-ancient-greek-women-gynoecium.jpg"
+                    class="img-fluid" alt="Set marmette 1">
             </a>
-            </div>
-            <div class="col">
-                <img src="../static/imgs/marble/cu367-marble-coaster-pompei-frescoes.jpg" class="img-fluid" alt="Set marmette 2"/>
-            </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <img src="../static/imgs/marble/cu368-marble-coaster-pompei-frescoes.jpg" class="img-fluid" alt="Set marmette 3"/>
-            </div>
-            <div class="col">
-                <img src="../static/imgs/marble/cu369-marble-coaster-italian-renaissance-deco.jpg" class="img-fluid" alt="Set marmette 4">
-            </div>
+        <div class="col">
+            <img src="../static/imgs/marble/cu367-marble-coaster-pompei-frescoes.jpg" class="img-fluid"
+                alt="Set marmette 2" />
         </div>
     </div>
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        {% include "jinja/footer_content.html" %}
-    </footer>
-</body>
-
-</html>
+    <div class="row">
+        <div class="col">
+            <img src="../static/imgs/marble/cu368-marble-coaster-pompei-frescoes.jpg" class="img-fluid"
+                alt="Set marmette 3" />
+        </div>
+        <div class="col">
+            <img src="../static/imgs/marble/cu369-marble-coaster-italian-renaissance-deco.jpg" class="img-fluid"
+                alt="Set marmette 4">
+        </div>
+    </div>
+</div>
+{% endblock %}

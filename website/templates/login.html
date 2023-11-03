@@ -1,55 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    {% include "jinja/headers.html" %}
-    <link rel="stylesheet" type="text/css" href="../static/style/homepagebgtest.css" />
-    <title>Login - Studio Vertu Europe</title>
-</head>
-
-<body>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="logo-container">
-                    <img src="../static/imgs/logo/sve-upscaled.png" alt="Company Logo" class="company-logo">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="text-center">
-                    <h1>Login page</h1>
-                    <div class="alert alert-warning" role="alert">
-                        Please log-in with your credentials, if you do not have any, use the "Register" button below.
-                    </div>
-                    <form class="row g-3" action="#" method="post">
-                        <div class="col-md-6">
-                            <label for="inputEmail4" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="inputEmail4" name="email">
-                          </div>
-                          <div class="col-md-6">
-                            <label for="inputPassword4" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="inputPassword4" name="pswd">
-                          </div>
-                        <p><input type="submit" class="btn btn-primary" value="Login" /></p>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="text-center">
-                    <p class="paragraph-style">{% block histroy %}{% endblock %}
-                    </p>
-                </div>
-            </div>
+{% extends "jinja/bases/general_base.html" %}
+{% block otherstyles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}" />{% endblock %}
+{% block title %}Login{% endblock %}
+{% block content%}
+<div class="row">
+    <div class="col-12">
+        <div class="logo-container">
+            <img src="../static/imgs/logo/sve-upscaled.png" alt="Company Logo" class="company-logo">
         </div>
     </div>
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top"></footer>
-    {% include "jinja/footer_content.html" %}
-    </footer>
-    {% include "jinja/bootstrap_js.html" %}
-</body>
-
-</html>
+</div>
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-8 col-md-6">
+        <div class="text-center">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for msg in messages %}
+            <div class="alert alert-danger" role="alert">{{msg}}</div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <div class="alert alert-warning" role="alert">
+                Please log-in with your credentials, if you do not have any, use the "Register" button below.
+            </div>
+        </div>
+        <form class="row g-3" action="#" method="post">
+            <div class="col-md-6">
+                <label for="inputEmail4" class="form-label">Email</label>
+                <input type="email" class="form-control" id="inputEmail4" name="email">
+            </div>
+            <div class="col-md-6">
+                <label for="inputPassword4" class="form-label">Password</label>
+                <input type="password" class="form-control" id="inputPassword4" name="pswd">
+            </div>
+            <input type="submit" class="btn btn-primary" value="Login" />
+        </form>
+    </div>
+</div>
+{% endblock %}

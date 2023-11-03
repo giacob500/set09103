@@ -3,7 +3,7 @@
 
 <head>
     {% include "jinja/headers.html" %}
-    <link rel="stylesheet" type="text/css" href="../static/style/homepagebgtest.css" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}"/>
     <title>{% block title %}{% endblock %}</title>
 </head>
 
@@ -19,16 +19,18 @@
         <div class="row">
             <div class="col">
                 <div class="text-center">
-                    <h1>Welcome to SVE</h1>
+                    <h1>Welcome to SVE{% if username %}, {{ username }}{% endif %}
+                    </h1>
                     <div class="alert alert-warning" role="alert">
-                        This is the first version of the website Giacomo Lorenzi is building for SVE s.r.l. (Studio
+                        This is the first beta version of the website Giacomo Lorenzi is building for SVE s.r.l. (Studio
                         Vertu
                         Europe).
                     </div>
-
-                    <button type="button" class="btn btn-primary"
-                        onclick="document.location='categories.html'">Enter</button>
-
+                    {% if username %}
+                    <a href="/categories" class="btn btn-success">Enter</a>
+                    {% else %}
+                    <a href="/login" class="btn btn-primary">Enter</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

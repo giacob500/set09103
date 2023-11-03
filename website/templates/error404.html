@@ -1,44 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    {% include "jinja/headers.html" %}
-    <link rel="stylesheet" type="text/css" href="../static/style/homepagebgtest.css" />
-    <title>404 - Studio Vertu Europe</title>
-</head>
-
-<body>
-    <div class="container-fluid background-crackedmarble">
-        <div class="row">
-            <div class="col">
-                <div class="logo-container">
-                    <img src="../static/imgs/logo/sve-upscaled.png" alt="Company Logo" class="company-logo">
-                </div>
+{% extends "jinja/bases/general_base.html" %}
+{% block otherstyles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}" />{% endblock %}
+{% block title %}404{% endblock %}
+{% block content%}
+<div class="background-crackedmarble">
+    <div class="row">
+        <div class="col">
+            <div class="logo-container">
+                <img src="../static/imgs/logo/sve-upscaled.png" alt="Company Logo" class="company-logo">
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <div class="text-center">
-                    <h1>Oops! This tile broke</h1>
-                    <div class="d-flex justify-content-center align-items-center mt-4">
-                        <p class="error-paragraph-style text-shadow">The source you are looking forward does not exist. Please return to the homepage.</p>
-                    </div>
-                    <button type="button" class="btn btn-primary"
-                        onclick="document.location='/'">Homepage</button>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                
-            </div>
-        </div>
-        
     </div>
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        {% include "jinja/footer_content.html" %}
-    </footer>
-</body>
-
-</html>
+    <div class="row">
+        <div class="col">
+            <div class="text-center">
+                <h1>Oops! This tile broke</h1>
+                <div class="d-flex justify-content-center align-items-center mt-4">
+                    <p class="error-paragraph-style text-shadow">The source you are looking forward does not exist.
+                        Please return to the homepage.</p>
+                </div>
+                <a href="/" class="btn btn-primary">Homepage</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

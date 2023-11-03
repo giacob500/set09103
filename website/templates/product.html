@@ -1,26 +1,19 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    {% include "jinja/headers.html" %}
-    <link rel="stylesheet" type="text/css" href="../static/style/otherstyles.css"/>
-    <script src="../static/scripts/script.js"></script>
-    <title>Product details - Studio Vertu Europe</title>
-</head>
-
-<body>
+{% extends "jinja/bases/general_base.html" %}
+{% block otherstyles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}" />{% endblock %}
+{% block title %}Product{% endblock %}
+{% block content%}
     <div class="container text-center">
         <h1>Product details</h1>
         <p>Selected product:</p>
         <p class="text-muted">Here there should be a multiple selection that allows to choose the exact tiles.</p>
-        <a href="examples/selectionmenu.html">Check multiple selection example here</a><br>
+        <a href="/test">Check multiple selection example here</a><br>
         
         <label for="sizeSelect">Table Size:</label>
         <select id="sizeSelect">
             <option value="5">4x4 5cm</option>
             <option value="10">4x4 10cm</option>
         </select>
-    
     <br>
     <div class="d-flex justify-content-center mt-3">
     <table class="table-with-bg">
@@ -38,11 +31,6 @@
     <p>Selected tiles names: <span id="selectedList"></span></p>
     </div>
     <div class="d-flex justify-content-center mt-3">
-        <button type="button" class="btn btn-secondary" onclick="document.location='basket.html'">Order</button>
+        <a href="/basket" class="btn btn-secondary">Order</a>
     </div>
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        {% include "jinja/footer_content.html" %}
-    </footer>
-</body>
-
-</html>
+    {% endblock %}
