@@ -1,9 +1,12 @@
 {% extends "jinja/bases/general_base.html" %}
 {% block otherstyles %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}" />{% endblock %}
+<script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
 {% block title %}Product{% endblock %}
 {% block content%}
-    <div class="container text-center">
+    <div class="text-center">
+        <a href="/logout" class="btn btn-danger">Logout</a>
+        <a href="/basket" class="btn btn-info">Basket</a>
         <h1>Product details</h1>
         <p>Selected product:</p>
         <p class="text-muted">Here there should be a multiple selection that allows to choose the exact tiles.</p>

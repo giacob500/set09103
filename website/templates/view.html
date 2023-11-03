@@ -1,0 +1,8 @@
+{% extends "jinja/bases/general_base.html" %}
+{% block title %}View{% endblock %}
+{% block content%}
+<h3>Accounts currently registered on the db:</h3><br>
+    {% for item in values %}
+        <p>Email: {{item.email}}</p>
+    {% endfor %}
+{% endblock %}
