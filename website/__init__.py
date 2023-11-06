@@ -14,7 +14,7 @@ class users(db.Model):
     _id = db.Column("id", db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100))
-    
+
     def __init__(self, email, password):
         self.email = email
         self.password = password
@@ -85,18 +85,19 @@ def login():
         session.permanent = True 
         email = request.form["email"]
         password = request.form["pswd"]
-        session["email"] = email
-
         found_user = users.query.filter_by(email=email).first()
-        if found_user and found_user.password == password:
-            session["email"] = found_user.email
-            flash('Login successful', 'success')
-            return redirect(url_for('home'))
+        # Check if there is any corresponding user in db
+        if found_user:
+            if found_user.email == email and found_user.password == password:
+                session["email"] = found_user.email
+                # Login successful
+                return redirect(url_for('user'))
         else:
-            flash('Login Failed, please check username and password', 'error')
-        return redirect(url_for("user"))
+            flash('Login Failed, please check email and password.', 'error')
+        return render_template("login.html")
     else:
-        if "email" in session:
+        # If there is already an email in the session and it corresponds to an email in the db
+        if "email" in session and users.query.filter_by(email=session["email"]).first():
             flash("You are already logged in", "info")
             return redirect(url_for("user"))
         return render_template("login.html")
@@ -104,7 +105,8 @@ def login():
 # Check if user is already logged in, otherwise prompt login screen
 @app.route("/user")
 def user():
-    if "email" in session:
+    # If there is already an email in the session and it corresponds to an email in the db
+    if "email" in session and users.query.filter_by(email=session["email"]).first():
         return redirect(url_for("home"))
         #return render_template("categories.html", username=registered_users.get(usr, "User"))
     else:
@@ -112,8 +114,6 @@ def user():
 
 @app.route("/logout")
 def logout():
-    if "email" in session:
-        email = session["email"]
     session.pop("email", None)
     return redirect(url_for("home"))
 
