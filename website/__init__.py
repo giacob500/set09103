@@ -3,8 +3,8 @@ from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.secret_key = "hello"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'
+app.secret_key = "notasecret"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../var/users.sqlite3'
 app.config["SQLALCHEMY_TRACK_NOTIFICATIONS"] = False
 app.permanent_session_lifetime = timedelta(minutes=5)
 
@@ -13,7 +13,7 @@ db = SQLAlchemy(app)
 class users(db.Model):
     _id = db.Column("id", db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True, nullable=False)
-    password = db.Column(db.String(100))
+    password = db.Column(db.String(100), nullable=False)
 
     def __init__(self, email, password):
         self.email = email
@@ -24,9 +24,12 @@ class users(db.Model):
 def test():
     return render_template("examples/selectionmenu.html")
 
-@app.route("/view")
-def view():
-    return render_template("view.html", values=users.query.all())
+@app.route("/admin")
+def adminview():
+    if "email" in session and session["email"] == "lorenzi@lorenzi.net":
+        return render_template("admin_view.html", values=users.query.all())
+    flash("Please log-in to access this page", "info")
+    return redirect(url_for("login"))
 
 #Pages in the website
 @app.route("/homepage")
@@ -52,10 +55,13 @@ def collections():
     flash("Please log-in to access this page", "info")
     return redirect(url_for("login"))
 
-@app.route("/product")
+@app.route("/product", methods=["POST", "GET"])
 def product():
     if "email" in session:
-        return render_template("product.html")
+        if request.method == "POST":
+            chosen_product = request.form["collection"]
+            return render_template("product.html", chosen_product=chosen_product)
+        # return render_template("product.html")
     flash("Please log-in to access this page", "info")
     return redirect(url_for("login"))
 
@@ -115,9 +121,11 @@ def user():
 @app.route("/logout")
 def logout():
     session.pop("email", None)
+    # Clear the flashed messages in the list by flashing an empty message
+    session.pop('_flashes', None)
     return redirect(url_for("home"))
 
-# Error handler 404
+# Error 404 handler
 @app.errorhandler(404)
 def invalid_route(e):
     return render_template("error404.html")

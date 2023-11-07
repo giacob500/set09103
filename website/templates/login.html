@@ -5,9 +5,11 @@
 {% block content%}
 <div class="row">
     <div class="col-12">
+        <a href="/">
         <div class="logo-container">
             <img src="../static/imgs/logo/sve-upscaled.png" alt="Company Logo" class="company-logo">
         </div>
+        </a>
     </div>
 </div>
 <div class="row justify-content-center">
@@ -15,9 +17,7 @@
         <div class="text-center">
             {% with messages = get_flashed_messages() %}
             {% if messages %}
-            {% for msg in messages %}
-            <div class="alert alert-danger" role="alert">{{msg}}</div>
-            {% endfor %}
+            <div class="alert alert-danger" role="alert">{{ messages[-1] }}</div>
             {% endif %}
             {% endwith %}
             <div class="alert alert-warning" role="alert">

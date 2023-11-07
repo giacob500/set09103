@@ -10,27 +10,39 @@
     <p>Choose a collection from below:</p>
 </div>
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <a href="product">
-                <img src="../static/imgs/marble/cu237-marble-coaster-ancient-greek-women-gynoecium.jpg"
-                    class="img-fluid" alt="Set marmette 1">
-            </a>
+    <form action="/product" method="post">
+        <div class="row">
+            <div class="col">
+                <input type="hidden" name="collection" value="collection1">
+                <button type="submit" class="btn btn-link">
+                    <img src="../static/imgs/marble/cu237-marble-coaster-ancient-greek-women-gynoecium.jpg"
+                        class="img-fluid" alt="Set marmette 1">
+                </button>
+            </div>
+            <div class="col">
+                <input type="hidden" name="collection" value="collection2">
+                <button type="submit" class="btn btn-link">
+                    <img src="../static/imgs/marble/cu367-marble-coaster-pompei-frescoes.jpg"
+                        class="img-fluid" alt="Set marmette 2">
+                </button>
+            </div>
         </div>
-        <div class="col">
-            <img src="../static/imgs/marble/cu367-marble-coaster-pompei-frescoes.jpg" class="img-fluid"
-                alt="Set marmette 2" />
+        <div class="row">
+            <div class="col">
+                <input type="hidden" name="collection" value="collection3">
+                <button type="submit" class="btn btn-link">
+                    <img src="../static/imgs/marble/cu368-marble-coaster-pompei-frescoes.jpg"
+                        class="img-fluid" alt="Set marmette 3">
+                </button>
+            </div>
+            <div class="col">
+                <input type="hidden" name="collection" value="collection4">
+                <button type="submit" class="btn btn-link">
+                    <img src="../static/imgs/marble/cu369-marble-coaster-italian-renaissance-deco.jpg"
+                        class="img-fluid" alt="Set marmette 4">
+                </button>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <img src="../static/imgs/marble/cu368-marble-coaster-pompei-frescoes.jpg" class="img-fluid"
-                alt="Set marmette 3" />
-        </div>
-        <div class="col">
-            <img src="../static/imgs/marble/cu369-marble-coaster-italian-renaissance-deco.jpg" class="img-fluid"
-                alt="Set marmette 4">
-        </div>
-    </div>
+    </form>
 </div>
 {% endblock %}

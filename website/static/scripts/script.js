@@ -34,3 +34,5 @@ window.addEventListener('DOMContentLoaded', (event) => {
         });
     }
 });
+
+// This is for the Quantity selector in /product page

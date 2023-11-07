@@ -1,39 +1,50 @@
 {% extends "jinja/bases/general_base.html" %}
 {% block otherstyles %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}" />{% endblock %}
-<script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}" />
+{% endblock %}
 {% block title %}Product{% endblock %}
 {% block content%}
-    <div class="text-center">
-        <a href="/logout" class="btn btn-danger">Logout</a>
-        <a href="/basket" class="btn btn-info">Basket</a>
-        <h1>Product details</h1>
-        <p>Selected product:</p>
-        <p class="text-muted">Here there should be a multiple selection that allows to choose the exact tiles.</p>
-        <a href="/test">Check multiple selection example here</a><br>
-        
-        <label for="sizeSelect">Table Size:</label>
-        <select id="sizeSelect">
-            <option value="5">4x4 5cm</option>
-            <option value="10">4x4 10cm</option>
+<div class="text-center">
+    <a href="/logout" class="btn btn-danger">Logout</a>
+    <a href="/basket" class="btn btn-info">Basket</a>
+    <h1>Product details</h1>
+    <form class="form-group">
+        <p>{% if chosen_product %}You chose: {{ chosen_product }}{% endif %}</p>
+        <label for="product">Choose a product:</label>
+        <select class="form-control" id="product" name="product">
+            <option value="Coasters">Coasters - 4x4 tumbled marble, cork back</option>
+            <option value="WineStopper">Wine Stopper - 2x2 tumbled marble with metal base</option>
+            <option value="Magnet">Magnet - 2x2 tumbled marble</option>
+            <option value="Ornament">Ornament - 2x2 tumbled marble</option>
+            <option value="RustHook">Rust Hook - 4x4 tumbled marble with metal hook</option>
+            <option value="WallTrivet">Wall Trivet - 8x8 tumbled marble with Masonite back</option>
+            <option value="TrivetWithCork">Trivet with cork - 8x8 tumbled marble with cork back</option>
         </select>
-    <br>
-    <div class="d-flex justify-content-center mt-3">
-    <table class="table-with-bg">
-        <tr>
-            <td>Mattonella 1</td>
-            <td>Mattonella 2</td>
-        </tr>
-        <tr>
-            <td>Mattonella 3</td>
-            <td>Mattonella 4</td>
-        </tr>
-    </table>
-    </div>
-    <p>Selected tiles in total: <span id="counter">0</span></p>
-    <p>Selected tiles names: <span id="selectedList"></span></p>
-    </div>
-    <div class="d-flex justify-content-center mt-3">
-        <a href="/basket" class="btn btn-secondary">Order</a>
-    </div>
-    {% endblock %}
+        <br>
+        <a href="/test">Check multiple selection example here</a>
+        <div class="d-flex justify-content-center mt-3">
+            <table class="table-with-bg">
+                <tr>
+                    <td>Mattonella 1</td>
+                    <td>Mattonella 2</td>
+                </tr>
+                <tr>
+                    <td>Mattonella 3</td>
+                    <td>Mattonella 4</td>
+                </tr>
+            </table>
+        </div>
+        <p>In total you selected <span id="counter">0</span> tiles, including: <span id="selectedList">*nothing*</span></p>
+        <label for="quantity">Quantity:</label>
+        <div class="input-group">
+            <input type="number" id="quantity" name="quantity" min="0" value="0" class="form-control">
+        </div>
+        <div class="d-flex justify-content-center mt-3">
+            <input class="btn btn-primary" type="submit" value="Order">
+        </div>
+    </form>
+{% endblock %}
+{% block javascript %}
+<script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
+{% include "jinja/bootstrap_js.html" %}
+{% endblock %}
