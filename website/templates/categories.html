@@ -8,8 +8,33 @@
     <a href="/basket" class="btn btn-info">Basket</a>
     <h1>Categories</h1>
     <p>Choose a category from below:</p>
-    <a href="/collections" class="btn btn-secondary marble-button">Marble</a>
-    <a href="/collections" class="btn btn-secondary terracotta-button">Terracotta</a>
-    <a href="/collections" class="btn btn-secondary wood-button">Wood</a>
+    <a href="/collections" class="btn btn-secondary marble-button" name="category" value="marble">Marble</a>
+    <a href="/collections" class="btn btn-secondary terracotta-button" name="category" value="terracotta">Terracotta</a>
+    <a href="/collections" class="btn btn-secondary wood-button" name="category" value="wood">Wood</a>
+    <div class="container">
+        <form action="/collections" method="post">
+            <div class="row">
+                <div class="col">
+                    <button type="submit" name="category" value="Marble" class="btn btn-link marble-button">
+                    Marble
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button type="submit" name="category" value="Terracotta" class="btn btn-link terracotta-button">
+                     Terracotta
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button type="submit" name="category" value="Wood" class="btn btn-link wood-button">
+                    Wood  
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}

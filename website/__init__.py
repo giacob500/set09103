@@ -48,10 +48,12 @@ def categories():
     flash("Please log-in to access this page", "info")
     return redirect(url_for("login"))
 
-@app.route("/collections")
+@app.route("/collections", methods=["POST", "GET"])
 def collections():
     if "email" in session:
-        return render_template("collections.html")
+        if request.method == "POST":
+            chosen_category = request.form["category"]
+            return render_template("collections.html", chosen_category=chosen_category)
     flash("Please log-in to access this page", "info")
     return redirect(url_for("login"))
 

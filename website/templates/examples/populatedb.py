@@ -1,3 +1,4 @@
+# Execute this program to update the SQLite database
 import sqlite3
 
 # Connect to the SQLite database

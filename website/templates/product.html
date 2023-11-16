@@ -1,6 +1,18 @@
 {% extends "jinja/bases/general_base.html" %}
 {% block otherstyles %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}" />
+<style>
+.table-with-bg {
+    background-image: url('{{ chosen_product }}');
+    /* URL of the background image */
+    background-size: cover;
+    /* Fit the image within the table without distortion */
+    background-repeat: no-repeat;
+    /* Prevent image repetition */
+    width: 300px;
+    /* Set the table width to 300px */
+  }
+</style>
 {% endblock %}
 {% block title %}Product{% endblock %}
 {% block content%}
@@ -10,7 +22,7 @@
     <h1>Product details</h1>
     <form class="form-group">
         <p>{% if chosen_product %}You chose: {{ chosen_product }}{% endif %}</p>
-        <label for="product">Choose a product:</label>
+        <label for="product">Choose product type:</label>
         <select class="form-control" id="product" name="product">
             <option value="Coasters">Coasters - 4x4 tumbled marble, cork back</option>
             <option value="WineStopper">Wine Stopper - 2x2 tumbled marble with metal base</option>
