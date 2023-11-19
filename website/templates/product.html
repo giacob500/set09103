@@ -4,13 +4,9 @@
 <style>
 .table-with-bg {
     background-image: url('{{ chosen_product }}');
-    /* URL of the background image */
     background-size: cover;
-    /* Fit the image within the table without distortion */
     background-repeat: no-repeat;
-    /* Prevent image repetition */
     width: 300px;
-    /* Set the table width to 300px */
   }
 </style>
 {% endblock %}
@@ -20,10 +16,9 @@
     <a href="/logout" class="btn btn-danger">Logout</a>
     <a href="/basket" class="btn btn-info">Basket</a>
     <h1>Product details</h1>
-    <form class="form-group">
-        <p>{% if chosen_product %}You chose: {{ chosen_product }}{% endif %}</p>
+    <form class="form-group" action="/categories" method="post">
         <label for="product">Choose product type:</label>
-        <select class="form-control" id="product" name="product">
+        <select class="form-control" id="product_type" name="product_type">
             <option value="Coasters">Coasters - 4x4 tumbled marble, cork back</option>
             <option value="WineStopper">Wine Stopper - 2x2 tumbled marble with metal base</option>
             <option value="Magnet">Magnet - 2x2 tumbled marble</option>
@@ -37,22 +32,25 @@
         <div class="d-flex justify-content-center mt-3">
             <table class="table-with-bg">
                 <tr>
-                    <td>Mattonella 1</td>
-                    <td>Mattonella 2</td>
+                    <td>Tile 1</td>
+                    <td>Tile 2</td>
                 </tr>
                 <tr>
-                    <td>Mattonella 3</td>
-                    <td>Mattonella 4</td>
+                    <td>Tile 3</td>
+                    <td>Tile 4</td>
                 </tr>
             </table>
         </div>
-        <p>In total you selected <span id="counter">0</span> tiles, including: <span id="selectedList">*nothing*</span></p>
-        <label for="quantity">Quantity:</label>
+       
+        <p>In total you selected <span id="product_counter">0</span> tiles, including: <span id="selectedList"></span></p>
+        <input type="hidden" name="product_counter">
+        <input type="hidden" name="selected_tiles">
+        <label for="product_quantity">Quantity:</label>
         <div class="input-group">
-            <input type="number" id="quantity" name="quantity" min="0" value="0" class="form-control">
+            <input type="number" id="product_quantity" name="product_quantity" min="1" value="1" class="form-control">
         </div>
         <div class="d-flex justify-content-center mt-3">
-            <input class="btn btn-primary" type="submit" value="Order">
+            <input class="btn btn-primary" type="submit" value="Add to basket">
         </div>
     </form>
     <div class="text-center">

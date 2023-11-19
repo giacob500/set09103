@@ -28,7 +28,7 @@ class Products(db.Model):
 # Testing
 @app.route("/test")
 def test():
-    return render_template("examples/selectionmenu.html")
+    return render_template("examples/test1.html")
 
 @app.route("/admin")
 def adminview():
@@ -47,9 +47,29 @@ def home():
         return render_template("index.html", username=session["email"])
     return render_template("index.html")
 
-@app.route("/categories")
+@app.route("/categories", methods=["POST", "GET"])
 def categories():
     if "email" in session:
+        if request.method == "POST":
+            product_type = request.form["product_type"]
+            product_counter = int(request.form["product_counter"])
+            selected_tiles = request.form["selected_tiles"]
+            product_quantity = int(request.form["product_quantity"])
+
+            # Store the data in the session
+            product_data = {
+                "product_type": product_type,
+                "product_counter": product_counter,
+                "selected_tiles": selected_tiles,
+                "product_quantity": product_quantity
+            }
+            
+            # Check if the "product_data" list is already in the session, if not, initialize it
+            if "basket_data" not in session:
+                session["basket_data"] = []
+            session["basket_data"].append(product_data)
+            return redirect(url_for("categories"))
+
         return render_template("categories.html")
     flash("Please log-in to access this page", "info")
     return redirect(url_for("login"))
@@ -59,9 +79,7 @@ def collections():
     if "email" in session:
         if request.method == "POST":
             chosen_category = request.form["category"]
-            print(chosen_category)
             products = Products.query.filter_by(category=chosen_category.lower()).all()
-            print(f"The length of the array is: {len(products)}")
             return render_template("collections.html", chosen_category=chosen_category, products=products)
     flash("Please log-in to access this page", "info")
     return redirect(url_for("login"))
@@ -76,9 +94,14 @@ def product():
     flash("Please log-in to access this page", "info")
     return redirect(url_for("login"))
 
-@app.route("/basket")
+@app.route("/basket", methods=["POST", "GET"])
 def basket():
     if "email" in session:
+        if request.method == "POST" and 'reset' in request.form:
+            session.pop("basket_data", None)
+            return redirect(url_for("basket"))
+        if "basket_data" in session:
+            return render_template("basket.html", basket_data=session["basket_data"])
         return render_template("basket.html")
     flash("Please log-in to access this page", "info")
     return redirect(url_for("login"))
@@ -134,6 +157,7 @@ def logout():
     session.pop("email", None)
     # Clear the flashed messages in the list by flashing an empty message
     session.pop('_flashes', None)
+    session.pop("basket_data", None)
     return redirect(url_for("home"))
 
 # Error 404 handler

@@ -8,7 +8,7 @@ conn = sqlite3.connect('var/users.sqlite3')
 cursor = conn.cursor()
 
 # Define the data to be inserted/updated
-product_data = (, 'cu373', 'Terracotta', 'static\imgs\terracotta\xtcu289.jpg')
+product_data = (3, 'cu373', 'Terracotta', 'static\imgs\terracotta\xtcu289.jpg')
 new_name = "static\imgs\marble\cu367-marble-coaster-pompei-frescoes.jpg"
 product_id_to_update = 3
 
