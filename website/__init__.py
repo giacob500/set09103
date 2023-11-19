@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.secret_key = "notasecret"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../var/users.sqlite3'
 app.config["SQLALCHEMY_TRACK_NOTIFICATIONS"] = False
-app.permanent_session_lifetime = timedelta(minutes=5)
+app.permanent_session_lifetime = timedelta(minutes=15)
 
 db = SQLAlchemy(app)
 
@@ -18,6 +18,12 @@ class users(db.Model):
     def __init__(self, email, password):
         self.email = email
         self.password = password
+
+class Products(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255))
+    category = db.Column(db.String(255))
+    image_url = db.Column(db.String(255))
 
 # Testing
 @app.route("/test")
@@ -53,7 +59,10 @@ def collections():
     if "email" in session:
         if request.method == "POST":
             chosen_category = request.form["category"]
-            return render_template("collections.html", chosen_category=chosen_category)
+            print(chosen_category)
+            products = Products.query.filter_by(category=chosen_category.lower()).all()
+            print(f"The length of the array is: {len(products)}")
+            return render_template("collections.html", chosen_category=chosen_category, products=products)
     flash("Please log-in to access this page", "info")
     return redirect(url_for("login"))
 
