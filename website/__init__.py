@@ -51,13 +51,20 @@ def home():
 def categories():
     if "email" in session:
         if request.method == "POST":
+            # If no tile selection has been made, include the whole set in the basket
+            product_name = request.form["product_name"]
             product_type = request.form["product_type"]
-            product_counter = int(request.form["product_counter"])
-            selected_tiles = request.form["selected_tiles"]
+            if request.form["product_counter"] == "":
+                product_counter = 4
+                selected_tiles = "Tile 1, Tile 2, Tile 3, Tile 4"
+            else:
+                product_counter = int(request.form["product_counter"])
+                selected_tiles = request.form["selected_tiles"]
             product_quantity = int(request.form["product_quantity"])
-
+            
             # Store the data in the session
             product_data = {
+                "product_name": product_name,
                 "product_type": product_type,
                 "product_counter": product_counter,
                 "selected_tiles": selected_tiles,
@@ -88,17 +95,39 @@ def collections():
 def product():
     if "email" in session:
         if request.method == "POST":
-            chosen_product = request.form["collection"]
-            return render_template("product.html", chosen_product=chosen_product)
-        # return render_template("product.html")
+            print
+            chosen_product_url = request.form["product_image_url"]
+            chosen_product_name = request.form["product_name"]
+            print(str(chosen_product_url + " " + chosen_product_name))
+            return render_template("product.html", chosen_product_url=chosen_product_url, chosen_product_name=chosen_product_name)
     flash("Please log-in to access this page", "info")
     return redirect(url_for("login"))
 
 @app.route("/basket", methods=["POST", "GET"])
 def basket():
     if "email" in session:
-        if request.method == "POST" and 'reset' in request.form:
-            session.pop("basket_data", None)
+        if request.method == "POST":
+            #Empty basket
+            if "reset" in request.form:
+                session.pop("basket_data", None)
+            #Delete single element from basket
+            elif "remove" in request.form:
+                to_remove = request.form["remove"]
+                substrings = to_remove.split("-")
+                matching_item = None
+                for item in session.get("basket_data", []):
+                    print(str(item))
+                    if (
+                        str(item.get("product_name")) == substrings[0]
+                        and str(item.get("product_type")) == substrings[1]
+                        and str(item.get("product_counter")) == substrings[2]
+                        and str(item.get("selected_tiles")) == substrings[3]
+                        and str(item.get("product_quantity")) == substrings[4]
+                    ):
+                        matching_item = item
+                        break
+                if matching_item:
+                    session["basket_data"].remove(matching_item)
             return redirect(url_for("basket"))
         if "basket_data" in session:
             return render_template("basket.html", basket_data=session["basket_data"])
@@ -137,9 +166,9 @@ def login():
         return render_template("login.html")
     else:
         # If there is already an email in the session and it corresponds to an email in the db
-        if "email" in session and users.query.filter_by(email=session["email"]).first():
-            flash("You are already logged in", "info")
-            return redirect(url_for("user"))
+        #if "email" in session and users.query.filter_by(email=session["email"]).first():
+        #    flash("You are already logged in", "info")
+        #    return redirect(url_for("user"))
         return render_template("login.html")
     
 # Check if user is already logged in, otherwise prompt login screen

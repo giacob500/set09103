@@ -3,7 +3,7 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}" />
 <style>
 .table-with-bg {
-    background-image: url('{{ chosen_product }}');
+    background-image: url('{{ chosen_product_url }}');
     background-size: cover;
     background-repeat: no-repeat;
     width: 300px;
@@ -13,8 +13,9 @@
 {% block title %}Product{% endblock %}
 {% block content%}
 <div class="text-center">
-    <a href="/logout" class="btn btn-danger">Logout</a>
+    <a href="/categories" class="btn btn-secondary">Back</a>
     <a href="/basket" class="btn btn-info">Basket</a>
+    <a href="/logout" class="btn btn-danger">Logout</a>
     <h1>Product details</h1>
     <form class="form-group" action="/categories" method="post">
         <label for="product">Choose product type:</label>
@@ -45,6 +46,7 @@
         <p>In total you selected <span id="product_counter">0</span> tiles, including: <span id="selectedList"></span></p>
         <input type="hidden" name="product_counter">
         <input type="hidden" name="selected_tiles">
+        <input type="hidden" name="product_name" value="{{ chosen_product_name }}">
         <label for="product_quantity">Quantity:</label>
         <div class="input-group">
             <input type="number" id="product_quantity" name="product_quantity" min="1" value="1" class="form-control">
@@ -53,9 +55,6 @@
             <input class="btn btn-primary" type="submit" value="Add to basket">
         </div>
     </form>
-    <div class="text-center">
-        <a href="/collections" class="btn btn-secondary">Back</a>
-    </div>
 {% endblock %}
 {% block javascript %}
 <script src="{{ url_for('static', filename='scripts/script.js') }}"></script>

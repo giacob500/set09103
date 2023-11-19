@@ -1,35 +1,38 @@
 {% extends "jinja/bases/general_base.html" %}
 {% block otherstyles %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}" />{% endblock %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}" />
+{% endblock %}
 {% block title %}Collections{% endblock %}
 {% block content%}
 <div class="text-center">
-    <a href="/logout" class="btn btn-danger">Logout</a>
+    <a href="/categories" class="btn btn-secondary">Back</a>    
     <a href="/basket" class="btn btn-info">Basket</a>
+    <a href="/logout" class="btn btn-danger">Logout</a>
     <h1>{% if chosen_category %}{{ chosen_category }}{% endif %}</h1>
     <p>Choose a collection from below:</p>
 </div>
 <div class="container">
-    <form action="/product" method="post">
-        {% if products|length == 0 %}
-        <div class="text-center">
-            <p>No {{ chosen_category }} products available at the moment. More products will arrive soon!</p>
-        </div>
-        {% else %}
+    {% if products|length == 0 %}
+    <div class="text-center">
+        <p>No {{ chosen_category }} products available at the moment. More products will arrive soon!</p>
+    </div>
+    {% else %}
+    <div class="row">
         {% for product in products %}
-        <div class="row">
-            <div class="col">
-                <button type="submit" name="collection" value="../{{ product.image_url }}" class="btn btn-link">
-                    <img src="../{{ product.image_url }}"
-                        class="img-fluid" alt="{{ product.name }}">
+        <div class="col-md-6 col-lg-4 mb-3">
+            <form action="/product" method="post">
+                <button type="submit" class="btn btn-link w-100">
+                    <img src="../{{ product.image_url }}" class="img-fluid" alt="{{ product.name }}">
+                    <input type="hidden" name="product_image_url" value="{{ product.image_url }}">
+                    <input type="hidden" name="product_name" value="{{ product.name }}">
                 </button>
-            </div>
+            </form>
         </div>
         {% endfor %}
-        {% endif %}
-        <div class="text-center">
-            <a href="/categories" class="btn btn-primary">Back</a>
-        </div>
-    </form>
+    </div>
+    {% endif %}
+    <div class="text-center">
+        <a href="/categories" class="btn btn-primary">Back</a>
+    </div>
 </div>
 {% endblock %}
