@@ -52,12 +52,22 @@
                 </tbody>
             </table>
 
-
             {% else %}
             <p>Your basket is empty.</p>
             {% endif %}
             <form
-                action="mailto:lorenzi@lorenzi.net example.com?subject=Order number %23 1&body=Hi, this is the text of the order"
+                action="mailto:lorenzi@lorenzi.net?subject=New Order from SVE website&body=Hi,%0Athis is the content of the order%3A%0A%0A
+                {% for item in basket_data %}
+                Name%3A {{ item.product_name }}%0A
+                Type%3A {{ item.product_type }}%0A
+                Counter%3A {{ item.product_counter }}%0A
+                Selected Tiles%3A {{ item.selected_tiles }}%0A
+                Quantity%3A {{ item.product_quantity }}%0A
+                %0A
+                {% endfor %}
+                %0A
+                Many thanks!
+                "
                 method="post" enctype="text/plain">
                 Name:<br>
                 <input type="text" name="name"><br>
