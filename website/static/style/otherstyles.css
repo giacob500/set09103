@@ -32,8 +32,8 @@ table td.selected {
   background-size: cover; /* Adjust as needed */
   background-repeat: no-repeat;
   color: black;
-  width: 150px; /* Adjust the width and height as needed */
-  height: 150px;
+  width: 300px; /* Adjust the width and height as needed */
+  height: 300px;
   border: none; /* Remove button border */
   cursor: pointer;
 }
@@ -42,8 +42,8 @@ table td.selected {
   background-size: cover; /* Adjust as needed */
   background-repeat: no-repeat;
   color: white;
-  width: 150px; /* Adjust the width and height as needed */
-  height: 150px;
+  width: 300px; /* Adjust the width and height as needed */
+  height: 300px;
   border: none; /* Remove button border */
   cursor: pointer;
 }
@@ -52,8 +52,8 @@ table td.selected {
   background-size: cover; /* Adjust as needed */
   background-repeat: no-repeat;
   color: white;
-  width: 150px; /* Adjust the width and height as needed */
-  height: 150px;
+  width: 300px; /* Adjust the width and height as needed */
+  height: 300px;
   border: none; /* Remove button border */
   cursor: pointer;
 }

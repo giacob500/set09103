@@ -1,33 +1,30 @@
 {% extends "jinja/bases/general_base.html" %}
 {% block otherstyles %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}" />{% endblock %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}" />
+{% endblock %}
 {% block title %}Categories{% endblock %}
 {% block content%}
 <div class="text-center">
     <a href="/logout" class="btn btn-danger">Logout</a>
     <a href="/basket" class="btn btn-info">Basket</a>
     <h1>Categories</h1>
-    <p>Choose a category from below:</p>
     <div class="container">
+        <p>Choose a category from below:</p>
         <form action="/collections" method="post">
-            <div class="row py-3 border-top">
-                <div class="col">
-                    <button type="submit" name="category" value="Marble" class="btn btn-link marble-button">
-                    Marble
+            <div class="row py-3 my-4 border-top">
+                <div class="col-md-4 mb-3">
+                    <button type="submit" name="category" value="Marble" class="btn btn-link btn-block marble-button">
+                        Marble
                     </button>
                 </div>
-            </div>
-            <div class="row py-3 border-top">
-                <div class="col">
-                    <button type="submit" name="category" value="Terracotta" class="btn btn-link terracotta-button">
-                     Terracotta
+                <div class="col-md-4 mb-3">
+                    <button type="submit" name="category" value="Terracotta" class="btn btn-link btn-block terracotta-button">
+                        Terracotta
                     </button>
                 </div>
-            </div>
-            <div class="row py-3 border-top">
-                <div class="col">
-                    <button type="submit" name="category" value="Wood" class="btn btn-link wood-button">
-                    Wood  
+                <div class="col-md-4 mb-3">
+                    <button type="submit" name="category" value="Wood" class="btn btn-link btn-block wood-button">
+                        Wood
                     </button>
                 </div>
             </div>

@@ -2,7 +2,7 @@
 {% block otherstyles %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}" />{% endblock %}
 {% block title %}Register{% endblock %}
-{% block content%}
+{% block top_content%}
 <div class="row">
     <div class="col-12">
         <a href="/">
@@ -12,16 +12,11 @@
         </a>
     </div>
 </div>
+{% endblock %}
+{% block content%}
 <div class="row justify-content-center">
     <div class="col-12 col-sm-8 col-md-6">
         <div class="text-center">
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            {% for msg in messages %}
-            <div class="alert alert-danger" role="alert">{{msg}}</div>
-            {% endfor %}
-            {% endif %}
-            {% endwith %}
             <div class="alert alert-warning" role="alert">
                 Please register your credentials, if you already have an account, use the "Login" button below.
             </div>
