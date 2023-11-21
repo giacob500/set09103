@@ -17,18 +17,18 @@
 <div class="row justify-content-center">
     <div class="col-12 col-sm-8 col-md-6">
         <div class="text-center">
-            <div class="alert alert-warning" role="alert">
+            <div class="alert alert-warning d-inline-block" role="alert">
                 Please log-in with your credentials, if you do not have any, use the "Register" button below.
             </div>
         </div>
         <form class="row g-3" action="#" method="post">
             <div class="col-md-6">
                 <label for="inputEmail4" class="form-label">Email</label>
-                <input type="email" class="form-control" id="inputEmail4" name="email">
+                <input type="email" class="form-control" id="inputEmail4" name="email" required>
             </div>
             <div class="col-md-6">
                 <label for="inputPassword4" class="form-label">Password</label>
-                <input type="password" class="form-control" id="inputPassword4" name="pswd">
+                <input type="password" class="form-control" id="inputPassword4" name="pswd" required>
             </div>
             <input type="submit" class="btn btn-primary" value="Login" />
             <a href="/register" class="btn btn-secondary">Register</a>

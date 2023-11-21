@@ -7,6 +7,7 @@
     <title>{% block title %}{% endblock %} - Studio Vertu Europe</title>
 </head>
 <body>
+    {% block header_conent%}{% endblock %}
     <div class="container-fluid">
         {% block top_content%}{% endblock %}
         <div class="row justify-content-center">
@@ -32,7 +33,6 @@
             {% include "jinja/footer_content.html" %}
         </footer>
     </div>
-    <script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
     {% block javascript %}{% endblock %}
 </body>
 

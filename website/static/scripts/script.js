@@ -49,4 +49,3 @@ window.addEventListener('DOMContentLoaded', (event) => {
         return selectedTiles.join(', '); // Convert the array to a string separated by commas
     }
 });
-// This is for the Quantity selector in /product page

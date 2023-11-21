@@ -139,24 +139,31 @@ def basket():
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
-    if "email" in session:
-        if request.method == "POST":
-            email = request.form['email']
-            password = request.form['pswd']
+    form = RegistrationForm()
+    if request.method == "POST":
+        if "email" in session:
+            return redirect(url_for("user"))
+        print("does it go in?")
+        
+        email = request.form['email']
+        password = request.form['pswd']
 
-            # Check if the email is already in use
-            existing_user = users.query.filter_by(email=email).first()
-            if existing_user:
-                flash('Email already in use. Please choose another email.', 'error')
-                return redirect(url_for('register'))
+        # Check if the email is already in use
+        existing_user = users.query.filter_by(email=email).first()
+        if existing_user:
+            flash('Email already in use. Please choose another email.', 'error')
+            return redirect(url_for('register'))
 
-            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-            new_user = users(email=email, password=hashed_password)
-            db.session.add(new_user)
-            db.session.commit()
-            flash("Registration successful. Please log in.", "success")
-            return redirect(url_for("login"))
-        return redirect(url_for("user"))
+        if not password:  # Check if the password is empty
+            flash('Password cannot be empty. Please insert a password.', 'error')
+            return redirect(url_for('register'))
+
+        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+        new_user = users(email=email, password=hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+        flash("Registration successful. Please log in.", "success")
+        return redirect(url_for("login"))
     return render_template("register.html")
 
 # Check if user is loggin in for the first time or is already logged in
@@ -186,7 +193,6 @@ def login():
 def user():
     # If there is already an email in the session and it corresponds to an email in the db
     if users.query.filter_by(email=session["email"]).first():
-        flash("You are already logged in", "info")
         return redirect(url_for("home"))
     else:
         return redirect(url_for("login"))

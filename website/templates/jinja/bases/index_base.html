@@ -9,6 +9,30 @@
 
 <body>
     <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3">
+            <a class="d-flex align-items-centre mt-1 me-md-auto"></a>
+            <ul class="nav nav-pills align-items-center">
+                {% if username %}
+                <li class="nav-item">
+                    <a href="/basket" class="px-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black"
+                            class="bi bi-basket2-fill" viewBox="0 0 16 16">
+                            <path
+                                d="M5.929 1.757a.5.5 0 1 0-.858-.514L2.217 6H.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h.623l1.844 6.456A.75.75 0 0 0 3.69 15h8.622a.75.75 0 0 0 .722-.544L14.877 8h.623a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1.717L10.93 1.243a.5.5 0 1 0-.858.514L12.617 6H3.383L5.93 1.757zM4 10a1 1 0 0 1 2 0v2a1 1 0 1 1-2 0v-2zm3 0a1 1 0 0 1 2 0v2a1 1 0 1 1-2 0v-2zm4-1a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1z" />
+                        </svg>
+                    </a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    {% if username %}
+                    <a href="/logout" class="btn btn-danger">Logout</a>
+                    {% endif %}
+                </li>
+            </ul>
+
+        </header>
+    </div>
+    <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="logo-container">
@@ -21,27 +45,30 @@
                 <div class="text-center">
                     <h1>Welcome to SVE{% if username %}, {{ username }}{% endif %}
                     </h1>
-                    <div class="alert alert-warning" role="alert">
-                        This is the first beta version of the website Giacomo Lorenzi is building for SVE s.r.l. (Studio
+                    <div class="alert alert-warning d-inline-block" role="alert">
+                        This is the first beta version of the website which Giacomo Lorenzi is building for SVE s.r.l. (Studio
                         Vertu
                         Europe).
-                    </div>
+                    </div><br>
                     {% if username %}
                     <a href="/categories" class="btn btn-success">Enter</a>
-                    <a href="/basket" class="btn btn-info">Basket</a>
-                    <a href="/logout" class="btn btn-danger">Logout</a>
                     {% else %}
-                    <a href="/login" class="btn btn-primary">Enter</a>
+                    <a href="/login" class="btn btn-primary mb-3">Enter</a>
                     {% endif %}
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <div class="text-center">
-                    <p class="paragraph-style">{% block histroy %}{% endblock %}
-                    </p>
-                </div>
+        <div class="row mt-2">
+            <div class="col-lg-8 mx-auto">
+                <p class="lead text-justify">
+                    During the Roman period, Verona and Valpolicella were already known for the quarrying and processing of their marbles. They were used both for defensive and decorative purposes: the streets, the churches, the buildings, and the monuments of Verona are made of this noble material, and their astonishing beauty still amazes visitors.
+                    <br><br>
+                    Nowadays, Verona hosts one of the most important districts for marble processing, relying on a network of producers and craftsmen of the highest level and competence. STUDIOSVE is part of this story.
+                    <br><br>
+                    It all began when Leo, fascinated by the frescoes he could see in his hometown and a descendant of an ancient family of artists (discover more at <a href="http://www.lorenzi.net/" target="_blank">www.lorenzi.net</a>), developed an innovative technique to reproduce those paintings on marble. This was the starting point of a new era in the family business.
+                    <br><br>
+                    Now, STUDIOSVE offers a wide range of gift articles and decorative objects. We have "quarried" more than 2000 different images. Other Italian traditional materials like terracotta and slate were introduced. We customize our products on demand. The only limit is your imagination.
+                </p>
             </div>
         </div>
     </div>

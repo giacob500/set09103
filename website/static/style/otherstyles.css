@@ -36,6 +36,7 @@ table td.selected {
   height: 300px;
   border: none; /* Remove button border */
   cursor: pointer;
+  text-decoration: none;
 }
 .terracotta-button {
   background-image: url('../imgs/textures/terracotta.jpg');
@@ -46,6 +47,7 @@ table td.selected {
   height: 300px;
   border: none; /* Remove button border */
   cursor: pointer;
+  text-decoration: none;
 }
 .wood-button {
   background-image: url('../imgs/textures/wood.jpg');
@@ -56,6 +58,7 @@ table td.selected {
   height: 300px;
   border: none; /* Remove button border */
   cursor: pointer;
+  text-decoration: none;
 }
 .marble-button:hover {
   color: black;
@@ -89,8 +92,8 @@ table td.selected {
 }
 
 .company-logo {
-    max-width: 50%;
-    max-height: 50%;
+    max-width: 75%;
+    max-height: 75%;
 }
 
 .text-center p {

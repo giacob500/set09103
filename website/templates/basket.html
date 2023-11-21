@@ -3,19 +3,35 @@
 <style>
     .bi-trash:hover {
         fill: lightcoral;
-        /* Change the color to a lighter one when hovering */
         cursor: pointer;
     }
 </style>
 {% endblock %}
 {% block title %}Basket{% endblock %}
+{% block header_conent%}
+<div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-centre mt-1 me-md-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-house"
+                viewBox="0 0 16 16">
+                <path
+                    d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z" />
+            </svg>
+        </a>
+        <ul class="nav nav-pills align-items-center">
+            <li class="nav-item">
+                <a href="/logout" class="btn btn-danger">Logout</a>
+            </li>
+        </ul>
+
+    </header>
+</div>
+{% endblock %}
 {% block content%}
 <div class="text-center">
     <h1>Your Basket</h1>
     <div class="row d-flex justify-content-center">
         <div class="col-md-6">
-            <a href="/categories" class="btn btn-secondary">Back</a>
-            <a href="/logout" class="btn btn-danger">Logout</a>
             {% if basket_data %}
             <table class="table table-bordered table-striped table-hover">
                 <thead class="table-dark">
@@ -25,7 +41,7 @@
                         <th scope="col">Selected Tiles in Total</th>
                         <th scope="col">Tiles Details</th>
                         <th scope="col">Quantity</th>
-                        <th scope="col">Delete</th>
+                        <th scope="col" class="text-danger">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,28 +67,40 @@
                     {% endfor %}
                 </tbody>
             </table>
-            <form id="emailForm">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-                <br>
-                <label for="email">E-mail:</label>
-                <input type="email" id="email" name="email">
-                <br>
-                <label for="phone">Phone number:</label>
-                <input type="tel" id="phone" name="phone">
-                <br>
-                <label for="comments">Comments:</label>
-                <textarea id="comments" name="comments"></textarea>
-                <br>
-                {% for item in basket_data %}
-                <input type="hidden" id="product_name" name="Product Name" value="{{ item.product_name }}">
-                <input type="hidden" id="product_type" name="Product Type" value="{{ item.product_type }}">
-                <input type="hidden" id="product_counter" name="Selected Tiles in Total" value="{{ item.product_counter }}">
-                <input type="hidden" id="selected_tiles" name="Tiles Details" value="{{ item.selected_tiles }}">
-                <input type="hidden" id="product_quantity" name="Quantity" value="{{ item.product_quantity }}">
-                {% endfor %}
-                <input type="submit" value="Compose Email">
-            </form>
+            <div class="container mt-1">
+                <form id="emailForm">
+                  <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" class="form-control" id="email" name="email">
+                  </div>
+                  <div class="form-group">
+                    <label for="phone">Phone number:</label>
+                    <input type="tel" class="form-control" id="phone" name="phone">
+                  </div>
+                  <div class="form-group">
+                    <label for="comments">Comments:</label>
+                    <textarea class="form-control" id="comments" name="comments"></textarea>
+                  </div>
+                  {% for item in basket_data %}
+                    <input type="hidden" name="Product Name" value="{{ item.product_name }}">
+                    <input type="hidden" name="Product Type" value="{{ item.product_type }}">
+                    <input type="hidden" name="Selected Tiles in Total" value="{{ item.product_counter }}">
+                    <input type="hidden" name="Tiles Details" value="{{ item.selected_tiles }}">
+                    <input type="hidden" name="Quantity" value="{{ item.product_quantity }}">
+                  {% endfor %}
+                  <button type="submit" class="btn btn-primary mt-4">Compose Email</button>
+                </form>
+                <div class="row mt-3">
+                    <form action="/basket" method="post" class="mr-2">
+                        <input class="btn btn-danger" type="submit" name="reset" value="Empty Basket"
+                            onclick="return showConfirmation('Are you sure you want to delete all the items in the basket?')">
+                    </form>
+                </div>
+              </div>
             {% else %}
             <p>Your basket is empty.</p>
             {% endif %}
