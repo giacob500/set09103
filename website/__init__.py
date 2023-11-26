@@ -1,16 +1,21 @@
-from flask import Flask, flash, redirect, url_for, render_template, request, session
+from flask import Flask, flash, redirect, url_for, render_template, abort, request, session
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 
+
+#---- APP CONFIGURATION ----
+
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'not_a_secret'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../var/users.sqlite3'
+app.config["SECRET_KEY"] = "not_a_secret"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///../var/users.sqlite3"
 app.config["SQLALCHEMY_TRACK_NOTIFICATIONS"] = False
 app.permanent_session_lifetime = timedelta(minutes=15)
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
+
+#---- DATABASE CONFIGURATION ----
 
 class users(db.Model):
     _id = db.Column("id", db.Integer, primary_key=True)
@@ -27,10 +32,41 @@ class Products(db.Model):
     category = db.Column(db.String(255))
     image_url = db.Column(db.String(255))
 
+#---- ERROR HANDLING ----
+
+# Define a custom error handler for all server errors (5xx)
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template("error.html", error_message="Internal Server Error"), 500
+
+# Define a custom error handler for client error 404
+@app.errorhandler(404)
+def invalid_route(e):
+    return render_template("error.html", error_message="The source you are looking forward does not exist. Please return to the homepage."), 404
+
+# Define a custom error handler for all other errors
+@app.errorhandler(Exception)
+def handle_all_errors(e):
+    return render_template("error.html", error_message="An unexpected error occurred"), 500
+
+#---- TESTING ----
+
+# Route to simulate an error (for testing purposes)
+@app.route("/simulate_error")
+def simulate_error():
+    raise Exception(404)
+
+# Route to simulate a 404 error (for testing purposes)
+@app.route('/simulate_error_404')
+def simulate_error_404():
+    abort(404)
+
 # Testing
 @app.route("/test")
 def test():
-    return render_template("examples/test1.html")
+    return render_template("examples/paragraph.html")
+
+#---- ROUTING AND PAGES ----
 
 @app.route("/admin")
 def adminview():
@@ -139,26 +175,25 @@ def basket():
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
-    form = RegistrationForm()
     if request.method == "POST":
         if "email" in session:
             return redirect(url_for("user"))
         print("does it go in?")
         
-        email = request.form['email']
-        password = request.form['pswd']
+        email = request.form["email"]
+        password = request.form["pswd"]
 
         # Check if the email is already in use
         existing_user = users.query.filter_by(email=email).first()
         if existing_user:
-            flash('Email already in use. Please choose another email.', 'error')
-            return redirect(url_for('register'))
+            flash("Email already in use. Please choose another email.", "error")
+            return redirect(url_for("register"))
 
         if not password:  # Check if the password is empty
-            flash('Password cannot be empty. Please insert a password.', 'error')
-            return redirect(url_for('register'))
+            flash("Password cannot be empty. Please insert a password.", "error")
+            return redirect(url_for("register"))
 
-        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+        hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
         new_user = users(email=email, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
@@ -179,9 +214,9 @@ def login():
         if found_user and bcrypt.check_password_hash(found_user.password, password):
             # Login successful
             session["email"] = found_user.email
-            return redirect(url_for('user'))
+            return redirect(url_for("user"))
         else:
-            flash('Login Failed, please check email and password.', 'error')
+            flash("Login Failed, please check email and password.", "error")
         return render_template("login.html")
     # If there is already an email in the session check who they are
     if "email" in session:
@@ -192,23 +227,19 @@ def login():
 @app.route("/user")
 def user():
     # If there is already an email in the session and it corresponds to an email in the db
-    if users.query.filter_by(email=session["email"]).first():
+    if "email" in session and users.query.filter_by(email=session["email"]).first():
         return redirect(url_for("home"))
-    else:
-        return redirect(url_for("login"))
+    return redirect(url_for("login"))
 
 @app.route("/logout")
 def logout():
     session.pop("email", None)
     # Clear the flashed messages in the list by flashing an empty message
-    session.pop('_flashes', None)
+    session.pop("_flashes", None)
     session.pop("basket_data", None)
     return redirect(url_for("home"))
 
-# Error 404 handler
-@app.errorhandler(404)
-def invalid_route(e):
-    return render_template("error404.html")
+
 
 if __name__ == "__main__":
     with app.app_context():

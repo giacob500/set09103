@@ -6,9 +6,9 @@
 <div class="row">
     <div class="col-12">
         <a href="/">
-        <div class="logo-container">
-            <img src="../static/imgs/logo/sve-upscaled.png" alt="Company Logo" class="company-logo">
-        </div>
+            <div class="logo-container">
+                <img src="../static/imgs/logo/sve-upscaled.png" alt="Company Logo" class="company-logo">
+            </div>
         </a>
     </div>
 </div>
@@ -23,12 +23,19 @@
         </div>
         <form class="row g-3" action="#" method="post">
             <div class="col-md-6">
-                <label for="inputEmail4" class="form-label">Email</label>
-                <input type="email" class="form-control" id="inputEmail4" name="email">
+                <div class="form-floating mb-3">
+
+                    <input type="email" class="form-control" id="inputEmail" name="email"
+                        placeholder="name@example.com" required>
+                    <label for="inputEmail" class="form-label">Email Address</label>
+                </div>
             </div>
             <div class="col-md-6">
-                <label for="inputPassword4" class="form-label">Password</label>
-                <input type="password" class="form-control" id="inputPassword4" name="pswd">
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="inputPassword" name="pswd" placeholder="Password"
+                        required>
+                    <label for="inputPassword" class="form-label">Password</label>
+                </div>
             </div>
             <input type="submit" class="btn btn-primary" value="Confirm Registration" />
             <a href="/login" class="btn btn-secondary">Login</a>

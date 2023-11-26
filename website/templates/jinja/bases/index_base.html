@@ -3,7 +3,7 @@
 
 <head>
     {% include "jinja/headers.html" %}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}" />
     <title>{% block title %}{% endblock %}</title>
 </head>
 
@@ -46,29 +46,63 @@
                     <h1>Welcome to SVE{% if username %}, {{ username }}{% endif %}
                     </h1>
                     <div class="alert alert-warning d-inline-block" role="alert">
-                        This is the first beta version of the website which Giacomo Lorenzi is building for SVE s.r.l. (Studio
+                        This is the first beta version of the website which Giacomo Lorenzi is building for SVE s.r.l.
+                        (Studio
                         Vertu
                         Europe).
                     </div><br>
                     {% if username %}
-                    <a href="/categories" class="btn btn-success">Enter</a>
+                    <a href="/categories" class="btn btn-dark btn-lg">Enter</a>
                     {% else %}
-                    <a href="/login" class="btn btn-primary mb-3">Enter</a>
+                    <a href="/login" class="btn btn-outline-dark btn-lg mb-3">Enter</a>
                     {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-lg-8 mx-auto">
+                <div class="d-flex">
+                    <div class="flex-shrink-0 paragraph-pic">
+                        <img src="../static/imgs/paragraph/valpo.jpg" alt="Sample Image">
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <p class="lead text-justify">
+                            During the Roman period, Verona and Valpolicella were already known for the quarrying and
+                            processing of their marbles. They were used both for defensive and decorative purposes: the
+                            streets, the churches, the buildings, and the monuments of Verona are made of this noble
+                            material, and their astonishing beauty still amazes visitors.
+                            <br><br>
+                            Nowadays, Verona hosts one of the most important districts for marble processing, relying on
+                            a network of producers and craftsmen of the highest level and competence. STUDIOSVE is part
+                            of this story.
+                            <br><br>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row mt-2">
             <div class="col-lg-8 mx-auto">
-                <p class="lead text-justify">
-                    During the Roman period, Verona and Valpolicella were already known for the quarrying and processing of their marbles. They were used both for defensive and decorative purposes: the streets, the churches, the buildings, and the monuments of Verona are made of this noble material, and their astonishing beauty still amazes visitors.
-                    <br><br>
-                    Nowadays, Verona hosts one of the most important districts for marble processing, relying on a network of producers and craftsmen of the highest level and competence. STUDIOSVE is part of this story.
-                    <br><br>
-                    It all began when Leo, fascinated by the frescoes he could see in his hometown and a descendant of an ancient family of artists (discover more at <a href="http://www.lorenzi.net/" target="_blank">www.lorenzi.net</a>), developed an innovative technique to reproduce those paintings on marble. This was the starting point of a new era in the family business.
-                    <br><br>
-                    Now, STUDIOSVE offers a wide range of gift articles and decorative objects. We have "quarried" more than 2000 different images. Other Italian traditional materials like terracotta and slate were introduced. We customize our products on demand. The only limit is your imagination.
-                </p>
+                <div class="d-flex">
+                    <div class="flex-grow-1 me-3">
+                        <p class="lead text-end">
+                            It all began when Leo, fascinated by the frescoes he could see in his hometown and a
+                            descendant of an ancient family of artists (discover more at <a
+                                href="http://www.lorenzi.net/" target="_blank">www.lorenzi.net</a>), developed an
+                            innovative technique to reproduce those paintings on marble. This was the starting point of
+                            a new era in the family business.
+                            <br><br>
+                            Now, STUDIOSVE offers a wide range of gift articles and decorative objects. We have
+                            "quarried" more than 2000 different images. Other Italian traditional materials like
+                            terracotta and slate were introduced. We customize our products on demand. The only limit is
+                            your imagination.
+                        </p>
+                    </div>
+                    <div class="paragraph-pic">
+                        <img src="../static/imgs/paragraph/leo_potrait.png" alt="Leonardo potrait">
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

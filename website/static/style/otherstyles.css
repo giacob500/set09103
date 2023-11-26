@@ -126,3 +126,15 @@ table td.selected {
     background-position: center top;
     background-repeat: no-repeat;
 }
+
+.paragraph-pic {
+  max-width: 30%; /* Adjust the maximum width as needed */
+  margin: auto; /* Center the image */
+}
+
+.paragraph-pic img {
+  width: 100%;
+  height: auto;
+  display: block; /* Remove extra space beneath the image */
+  margin: auto; /* Center the image */
+}
