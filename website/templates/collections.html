@@ -36,12 +36,12 @@
     <h1>{% if chosen_category %}{{ chosen_category }}{% endif %}</h1>
 </div>
 <div class="container">
-    <p>Choose a collection from below:</p>
     {% if products|length == 0 %}
     <div class="text-center">
         <p>No {{ chosen_category }} products available at the moment. More products will arrive soon!</p>
     </div>
     {% else %}
+    <p>Choose a collection from below:</p>
     <div class="row">
         {% for product in products %}
         <div class="col-md-6 col-lg-4 mb-3">

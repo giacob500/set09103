@@ -37,19 +37,18 @@
     <div class="container">
         <p>Choose a category from below:</p>
         <form action="/collections" method="post">
-            <div class="row py-3 my-4">
-                <div class="col-md-4 mb-3">
+            <div class="row">
+                <div class="col-md-6 col-lg-4 mb-3">
                     <button type="submit" name="category" value="Marble" class="btn btn-link btn-block marble-button">
                         Marble
                     </button>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <button type="submit" name="category" value="Terracotta"
-                        class="btn btn-link btn-block terracotta-button">
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <button type="submit" name="category" value="Terracotta" class="btn btn-link btn-block terracotta-button">
                         Terracotta
                     </button>
                 </div>
-                <div class="col-md-4 mb-3">
+                <div class="col-md-6 col-lg-4 mb-3">
                     <button type="submit" name="category" value="Wood" class="btn btn-link btn-block wood-button">
                         Wood
                     </button>
@@ -58,4 +57,5 @@
         </form>
     </div>
 </div>
+
 {% endblock %}

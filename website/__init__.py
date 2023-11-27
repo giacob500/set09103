@@ -8,7 +8,7 @@ from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "not_a_secret"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///../var/users.sqlite3"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///../var/db.sqlite3"
 app.config["SQLALCHEMY_TRACK_NOTIFICATIONS"] = False
 app.permanent_session_lifetime = timedelta(minutes=15)
 
@@ -17,7 +17,7 @@ bcrypt = Bcrypt(app)
 
 #---- DATABASE CONFIGURATION ----
 
-class users(db.Model):
+class Users(db.Model):
     _id = db.Column("id", db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
@@ -71,7 +71,7 @@ def test():
 @app.route("/admin")
 def adminview():
     if "email" in session and session["email"] == "lorenzi@lorenzi.net":
-        return render_template("admin_view.html", values=users.query.all())
+        return render_template("admin_view.html", values=Users.query.all())
     flash("Please log-in to access this page", "info")
     return redirect(url_for("login"))
 
@@ -114,7 +114,6 @@ def categories():
                 session["basket_data"] = []
             session["basket_data"].append(product_data)
             return redirect(url_for("categories"))
-
         return render_template("categories.html")
     flash("Please log-in to access this page", "info")
     return redirect(url_for("login"))
@@ -184,7 +183,7 @@ def register():
         password = request.form["pswd"]
 
         # Check if the email is already in use
-        existing_user = users.query.filter_by(email=email).first()
+        existing_user = Users.query.filter_by(email=email).first()
         if existing_user:
             flash("Email already in use. Please choose another email.", "error")
             return redirect(url_for("register"))
@@ -194,7 +193,7 @@ def register():
             return redirect(url_for("register"))
 
         hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
-        new_user = users(email=email, password=hashed_password)
+        new_user = Users(email=email, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
         flash("Registration successful. Please log in.", "success")
@@ -210,7 +209,7 @@ def login():
         password = request.form["pswd"]
 
         # Check if there is any corresponding email in db
-        found_user = users.query.filter_by(email=email).first()
+        found_user = Users.query.filter_by(email=email).first()
         if found_user and bcrypt.check_password_hash(found_user.password, password):
             # Login successful
             session["email"] = found_user.email
@@ -227,7 +226,7 @@ def login():
 @app.route("/user")
 def user():
     # If there is already an email in the session and it corresponds to an email in the db
-    if "email" in session and users.query.filter_by(email=session["email"]).first():
+    if "email" in session and Users.query.filter_by(email=session["email"]).first():
         return redirect(url_for("home"))
     return redirect(url_for("login"))
 
