@@ -1,5 +1,6 @@
 {% extends "jinja/bases/general_base.html" %}
-{% block otherstyles %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/categories.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}" />
 {% endblock %}
 {% block title %}Categories{% endblock %}
@@ -57,5 +58,4 @@
         </form>
     </div>
 </div>
-
 {% endblock %}

@@ -3,14 +3,13 @@ from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 
+app = Flask(__name__)
 
 #---- APP CONFIGURATION ----
 
-app = Flask(__name__)
-app.config["SECRET_KEY"] = "not_a_secret"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///../var/db.sqlite3"
-app.config["SQLALCHEMY_TRACK_NOTIFICATIONS"] = False
+app.config.from_pyfile('etc/defaults.cfg')
 app.permanent_session_lifetime = timedelta(minutes=15)
+
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -44,27 +43,7 @@ def internal_server_error(e):
 def invalid_route(e):
     return render_template("error.html", error_message="The source you are looking forward does not exist. Please return to the homepage."), 404
 
-# Define a custom error handler for all other errors
-@app.errorhandler(Exception)
-def handle_all_errors(e):
-    return render_template("error.html", error_message="An unexpected error occurred"), 500
 
-#---- TESTING ----
-
-# Route to simulate an error (for testing purposes)
-@app.route("/simulate_error")
-def simulate_error():
-    raise Exception(404)
-
-# Route to simulate a 404 error (for testing purposes)
-@app.route('/simulate_error_404')
-def simulate_error_404():
-    abort(404)
-
-# Testing
-@app.route("/test")
-def test():
-    return render_template("examples/paragraph.html")
 
 #---- ROUTING AND PAGES ----
 
@@ -94,7 +73,7 @@ def categories():
             product_type = request.form["product_type"]
             if request.form["product_counter"] == "":
                 product_counter = 4
-                selected_tiles = "Tile 1, Tile 2, Tile 3, Tile 4"
+                selected_tiles = "Tile A, Tile B, Tile C, Tile D"
             else:
                 product_counter = int(request.form["product_counter"])
                 selected_tiles = request.form["selected_tiles"]
@@ -122,7 +101,12 @@ def categories():
 def collections():
     if "email" in session:
         if request.method == "POST":
-            chosen_category = request.form["category"]
+            if "product_name" in request.form:
+                old_product_name = request.form["product_name"]
+                retrived_category = Products.query.filter_by(name=old_product_name).first()
+                chosen_category = retrived_category.category
+            else:
+                chosen_category = request.form["category"]
             products = Products.query.filter_by(category=chosen_category.lower()).all()
             return render_template("collections.html", chosen_category=chosen_category, products=products)
     flash("Please log-in to access this page", "info")
@@ -132,10 +116,8 @@ def collections():
 def product():
     if "email" in session:
         if request.method == "POST":
-            print
             chosen_product_url = request.form["product_image_url"]
             chosen_product_name = request.form["product_name"]
-            print(str(chosen_product_url + " " + chosen_product_name))
             return render_template("product.html", chosen_product_url=chosen_product_url, chosen_product_name=chosen_product_name)
     flash("Please log-in to access this page", "info")
     return redirect(url_for("login"))
@@ -153,7 +135,6 @@ def basket():
                 substrings = to_remove.split("-")
                 matching_item = None
                 for item in session.get("basket_data", []):
-                    print(str(item))
                     if (
                         str(item.get("product_name")) == substrings[0]
                         and str(item.get("product_type")) == substrings[1]
@@ -177,7 +158,6 @@ def register():
     if request.method == "POST":
         if "email" in session:
             return redirect(url_for("user"))
-        print("does it go in?")
         
         email = request.form["email"]
         password = request.form["pswd"]

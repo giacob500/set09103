@@ -1,3 +1,6 @@
+// Code below regulates behaviour of grid selection in product page
+
+
 window.addEventListener('DOMContentLoaded', (event) => {
     var counter = 0;
     var counterElement = document.getElementById('product_counter');
@@ -46,6 +49,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
         for (var i = 0; i < listItems.length; i++) {
             selectedTiles.push(listItems[i].innerText);
         }
-        return selectedTiles.join(', '); // Convert the array to a string separated by commas
+        return selectedTiles.join(', ');
     }
 });

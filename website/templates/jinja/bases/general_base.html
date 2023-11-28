@@ -3,7 +3,7 @@
 
 <head>
     {% include "jinja/headers.html" %}
-    {% block otherstyles %}{% endblock %}
+    {% block styles %}{% endblock %}
     <title>{% block title %}{% endblock %} - Studio Vertu Europe</title>
 </head>
 
@@ -30,9 +30,13 @@
             </div>
         </div>
         {% block content%}{% endblock %}
-        {% include "jinja/footer_content.html" %}
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            {% include "jinja/footer_content.html" %}
+        </footer>
     </div>
-    {% block javascript %}{% endblock %}
+    {% block javascript %}
+    {% endblock %}
+    {% include "jinja/bootstrap_js.html" %}
 </body>
 
 </html>

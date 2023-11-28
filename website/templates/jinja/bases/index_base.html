@@ -46,10 +46,8 @@
                     <h1>Welcome to SVE{% if username %}, {{ username }}{% endif %}
                     </h1>
                     <div class="alert alert-warning d-inline-block" role="alert">
-                        This is the first beta version of the website which Giacomo Lorenzi is building for SVE s.r.l.
-                        (Studio
-                        Vertu
-                        Europe).
+                        {% block announcement %}
+                        {% endblock %}
                     </div><br>
                     {% if username %}
                     <a href="/categories" class="btn btn-dark btn-lg">Enter</a>
@@ -67,15 +65,9 @@
                     </div>
                     <div class="flex-grow-1 ms-3">
                         <p class="lead text-justify">
-                            During the Roman period, Verona and Valpolicella were already known for the quarrying and
-                            processing of their marbles. They were used both for defensive and decorative purposes: the
-                            streets, the churches, the buildings, and the monuments of Verona are made of this noble
-                            material, and their astonishing beauty still amazes visitors.
-                            <br><br>
-                            Nowadays, Verona hosts one of the most important districts for marble processing, relying on
-                            a network of producers and craftsmen of the highest level and competence. STUDIOSVE is part
-                            of this story.
-                            <br><br>
+                            {% block histroy_part1 %}
+                            
+                            {% endblock %}
                         </p>
                     </div>
                 </div>
@@ -86,16 +78,9 @@
                 <div class="d-flex">
                     <div class="flex-grow-1 me-3">
                         <p class="lead text-end">
-                            It all began when Leo, fascinated by the frescoes he could see in his hometown and a
-                            descendant of an ancient family of artists (discover more at <a
-                                href="http://www.lorenzi.net/" target="_blank">www.lorenzi.net</a>), developed an
-                            innovative technique to reproduce those paintings on marble. This was the starting point of
-                            a new era in the family business.
-                            <br><br>
-                            Now, STUDIOSVE offers a wide range of gift articles and decorative objects. We have
-                            "quarried" more than 2000 different images. Other Italian traditional materials like
-                            terracotta and slate were introduced. We customize our products on demand. The only limit is
-                            your imagination.
+                            {% block histroy_part2 %}
+                            
+                            {% endblock %}
                         </p>
                     </div>
                     <div class="paragraph-pic">
@@ -113,7 +98,9 @@
         </div>
     </div>
     <div class="container-fluid">
-        {% include "jinja/footer_content.html" %}
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top">
+            {% include "jinja/footer_content.html" %}
+        </footer>
     </div>
     {% include "jinja/bootstrap_js.html" %}
 </body>

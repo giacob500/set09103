@@ -1,11 +1,6 @@
 {% extends "jinja/bases/general_base.html" %}
-{% block otherstyles %}
-<style>
-    .bi-trash:hover {
-        fill: lightcoral;
-        cursor: pointer;
-    }
-</style>
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/basket.css') }}" />
 {% endblock %}
 {% block title %}Basket{% endblock %}
 {% block header_conent%}
@@ -19,7 +14,7 @@
             </svg>
         </a>
         <ul class="nav nav-pills align-items-center">
-            <li class="nav-item">
+            <li class="nav-item px-3">
                 <a href="/logout" class="btn btn-danger">Logout</a>
             </li>
         </ul>
@@ -111,5 +106,4 @@
 {% block javascript %}
 <script src="{{ url_for('static', filename='scripts/confirmation_script.js') }}"></script>
 <script src="{{ url_for('static', filename='scripts/email_script.js') }}"></script>
-{% include "jinja/bootstrap_js.html" %}
 {% endblock %}

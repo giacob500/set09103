@@ -1,3 +1,5 @@
+// Code below regulates behaviour of email generation in basket page
+
 document.getElementById('emailForm').addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -7,7 +9,6 @@ document.getElementById('emailForm').addEventListener('submit', function (event)
     for (var i = 0; i < formElements.length; i++) {
         var element = formElements[i];
         
-        // Check if the element is a hidden input
         if (element.type === 'hidden') {
             bodyContent += element.name + ': ' + element.value + '\n';
             if (element.name === 'Quantity') {
@@ -32,6 +33,5 @@ document.getElementById('emailForm').addEventListener('submit', function (event)
     + encodeURIComponent(comments) + '%0D%0A%0D%0AMany%20thanks%2C%0D%0A' + encodeURIComponent(name) + '%0D%0A%0D%0A' + encodeURIComponent(email)
     + '%0D%0A' + encodeURIComponent(phone);;
 
-    // Open default email client
     window.location.href = mailtoLink;
 });

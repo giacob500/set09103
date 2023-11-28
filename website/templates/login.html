@@ -1,5 +1,5 @@
 {% extends "jinja/bases/general_base.html" %}
-{% block otherstyles %}
+{% block styles %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}" />{% endblock %}
 {% block title %}Login{% endblock %}
 {% block top_content%}
@@ -21,7 +21,7 @@
                 Please log-in with your credentials, if you do not have any, use the "Register" button below.
             </div>
         </div>
-        <form class="row g-3" action="#" method="post">
+        <form class="row g-3 mt-2" action="#" method="post">
             <div class="col-md-6">
                 <div class="form-floating mb-3">
                     <input type="email" class="form-control" id="inputEmail" name="email"

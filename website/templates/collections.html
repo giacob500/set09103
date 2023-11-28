@@ -1,5 +1,5 @@
 {% extends "jinja/bases/general_base.html" %}
-{% block otherstyles %}
+{% block styles %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/otherstyles.css') }}" />
 {% endblock %}
 {% block title %}Collections{% endblock %}
@@ -41,7 +41,9 @@
         <p>No {{ chosen_category }} products available at the moment. More products will arrive soon!</p>
     </div>
     {% else %}
-    <p>Choose a collection from below:</p>
+    <div class="text-center">
+        <p>Choose a collection from below:</p>
+    </div>
     <div class="row">
         {% for product in products %}
         <div class="col-md-6 col-lg-4 mb-3">
@@ -57,7 +59,7 @@
     </div>
     {% endif %}
     <div class="text-center">
-        <a href="/categories" class="btn btn-primary">Back</a>
+        <a href="/categories" class="btn btn-secondary">Back</a>
     </div>
 </div>
 {% endblock %}
