@@ -10,7 +10,6 @@ app = Flask(__name__)
 app.config.from_pyfile('etc/defaults.cfg')
 app.permanent_session_lifetime = timedelta(minutes=15)
 
-
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
@@ -33,20 +32,25 @@ class Products(db.Model):
 
 #---- ERROR HANDLING ----
 
-# Define a custom error handler for all server errors (5xx)
-@app.errorhandler(500)
-def internal_server_error(e):
-    return render_template("error.html", error_message="Internal Server Error"), 500
-
-# Define a custom error handler for client error 404
+# Error handler for client error 404
 @app.errorhandler(404)
 def invalid_route(e):
     return render_template("error.html", error_message="The source you are looking forward does not exist. Please return to the homepage."), 404
 
+# Error handler for all server errors (5xx)
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template("error.html", error_message="Internal Server Error"), 500
+
+# Error handler for all other errors
+@app.errorhandler(Exception)
+def handle_all_errors(e):
+    return render_template('error.html', error_message='An unexpected error occurred'), 500
 
 
 #---- ROUTING AND PAGES ----
 
+# Page accessible only to website admins (currently just lorenzi@lorenzi.net) to check all users currently registered on website
 @app.route("/admin")
 def adminview():
     if "email" in session and session["email"] == "lorenzi@lorenzi.net":
@@ -54,7 +58,7 @@ def adminview():
     flash("Please log-in to access this page", "info")
     return redirect(url_for("login"))
 
-#Pages in the website
+# Website homepage
 @app.route("/homepage")
 @app.route("/home")
 @app.route("/index")
@@ -68,7 +72,8 @@ def home():
 def categories():
     if "email" in session:
         if request.method == "POST":
-            # If no tile selection has been made, include the whole set in the basket
+
+            # If no tile selection has been made in product page, include the whole set in the basket
             product_name = request.form["product_name"]
             product_type = request.form["product_type"]
             if request.form["product_counter"] == "":
@@ -93,7 +98,9 @@ def categories():
                 session["basket_data"] = []
             session["basket_data"].append(product_data)
             return redirect(url_for("categories"))
+        
         return render_template("categories.html")
+    
     flash("Please log-in to access this page", "info")
     return redirect(url_for("login"))
 
@@ -101,14 +108,18 @@ def categories():
 def collections():
     if "email" in session:
         if request.method == "POST":
+
             if "product_name" in request.form:
+                # Enter this condition if browsing back from product page
                 old_product_name = request.form["product_name"]
                 retrived_category = Products.query.filter_by(name=old_product_name).first()
                 chosen_category = retrived_category.category
             else:
                 chosen_category = request.form["category"]
+
             products = Products.query.filter_by(category=chosen_category.lower()).all()
             return render_template("collections.html", chosen_category=chosen_category, products=products)
+        
     flash("Please log-in to access this page", "info")
     return redirect(url_for("login"))
 
@@ -119,6 +130,7 @@ def product():
             chosen_product_url = request.form["product_image_url"]
             chosen_product_name = request.form["product_name"]
             return render_template("product.html", chosen_product_url=chosen_product_url, chosen_product_name=chosen_product_name)
+        
     flash("Please log-in to access this page", "info")
     return redirect(url_for("login"))
 
@@ -147,9 +159,11 @@ def basket():
                 if matching_item:
                     session["basket_data"].remove(matching_item)
             return redirect(url_for("basket"))
+        
         if "basket_data" in session:
             return render_template("basket.html", basket_data=session["basket_data"])
         return render_template("basket.html")
+    
     flash("Please log-in to access this page", "info")
     return redirect(url_for("user"))
 
@@ -167,20 +181,20 @@ def register():
         if existing_user:
             flash("Email already in use. Please choose another email.", "error")
             return redirect(url_for("register"))
-
-        if not password:  # Check if the password is empty
+        # Check if the password is empty
+        if not password:
             flash("Password cannot be empty. Please insert a password.", "error")
             return redirect(url_for("register"))
-
+        
         hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
         new_user = Users(email=email, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
         flash("Registration successful. Please log in.", "success")
         return redirect(url_for("login"))
+    
     return render_template("register.html")
 
-# Check if user is loggin in for the first time or is already logged in
 @app.route("/login", methods=["POST", "GET"])
 def login():
     if request.method == "POST":
@@ -197,6 +211,7 @@ def login():
         else:
             flash("Login Failed, please check email and password.", "error")
         return render_template("login.html")
+    
     # If there is already an email in the session check who they are
     if "email" in session:
         return redirect(url_for("user"))
@@ -212,8 +227,8 @@ def user():
 
 @app.route("/logout")
 def logout():
+    # Clear session related data
     session.pop("email", None)
-    # Clear the flashed messages in the list by flashing an empty message
     session.pop("_flashes", None)
     session.pop("basket_data", None)
     return redirect(url_for("home"))
